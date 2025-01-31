@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            scroll-snap-align: start;
+        }
+        
+        .container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #0732a2;
+            text-align: center;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: #f94877;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #f94877;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 800px;
+            margin: 2rem auto;
+            color: #333;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .keyword {
+            color: #f94877;
+            font-weight: bold;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 1000px;
+            margin: 2rem auto;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 45%;
+        }
+
+        .stat-title {
+            color: #0732a2;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .stat-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .stat-list li {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: rgba(45, 91, 227, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-list li::before {
+            content: '✓';
+            color: #2d5be3;
+            font-weight: bold;
+        }
+
+        .goal-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .goal-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .goal-icon {
+            background: #f94877;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .goal-content {
+            flex: 1;
+        }
+
+        .goal-title {
+            color: #0732a2;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .goal-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .timeline-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1000px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .timeline-half {
+            width: 45%;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            color: #2d5be3;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .timeline-list li {
+            margin: 0.8rem 0;
+            padding: 0.5rem;
+            background: rgba(45, 91, 227, 0.05);
+            border-radius: 8px;
+        }
+
+        .conclusion-box {
+            text-align: center;
+            max-width: 800px;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .conclusion-quote {
+            font-size: 1.8rem;
+            color: #0732a2;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .conclusion-text {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .company-info {
+            position: absolute;
+            bottom: 2rem;
+            font-size: 1.2rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .company-info::before {
+            content: '📍';
+        }
+
+        .year-badge {
+            background: #f94877;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .kpi-badge {
+            background: rgba(45, 91, 227, 0.1);
+            color: #2d5be3;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .keyword-item {
+            background: rgba(249, 72, 119, 0.1);
+            color: #f94877;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1: Title -->
+        <div class="slide" style="background-color: #f0f5ff;">
+            <div class="year-badge">2025</div>
+            <div class="title">새로운 도전과 성장</div>
+            <div class="keyword-list">
+                <div class="keyword-item">AI 컨설팅</div>
+                <div class="keyword-item">교육 프로젝트</div>
+                <div class="keyword-item">맞춤형 솔루션</div>
+                <div class="keyword-item">도전 정신</div>
+            </div>
+            <div class="intro-text">
+                <span class="keyword">성장</span> •
+                <span class="keyword">혁신</span> •
+                <span class="keyword">전문성</span> •
+                <span class="keyword">도약</span>
+            </div>
+            <div class="company-info">
+                GPT Korea | OOO
+            </div>
+        </div>
+
+        <!-- Slide 2: 2024 Review -->
+        <div class="slide" style="background-color: #fff0f5;">
+            <div class="subtitle">2024년 돌아보기</div>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-title">
+                        <span>📈</span>
+                        주요 성과
+                    </div>
+                    <ul class="stat-list">
+                        <li>AI 컨설팅 프로젝트 3건 성공적 완료</li>
+                        <li>팀 내 업무 프로세스 개선 달성</li>
+                        <li>커뮤니케이션 기술 향상</li>
+                        <li>AI 솔루션 기획 역량 강화</li>
+                    </ul>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">
+                        <span>💪</span>
+                        개선 필요 사항
+                    </div>
+                    <ul class="stat-list">
+                        <li>프레젠테이션 설득력 강화</li>
+                        <li>데이터 시각화 능력 향상</li>
+                        <li>전문성 강화를 위한 자격증 취득</li>
+                        <li>AI 트렌드 학습 심화</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: 2025 Goals -->
+        <div class="slide" style="background-color: #f0f7ff;">
+            <div class="subtitle">2025년 목표</div>
+            <div class="goal-container">
+                <div class="goal-card">
+                    <div class="goal-icon">💻</div>
+                    <div class="goal-content">
+                        <div class="goal-title">기술적 목표</div>
+                        <div class="goal-details">
+                            - Excel, PowerPoint 등 OA 활용 능력 고도화<br>
+                            - Tableau 데이터 시각화 도구 마스터<br>
+                            - AI 트렌드와 p-LLM 활용법 심화 학습
+                        </div>
+                        <div class="kpi-badge">MOS Master 자격증 취득</div>
+                    </div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">🎯</div>
+                    <div class="goal-content">
+                        <div class="goal-title">업무 기여 목표</div>
+                        <div class="goal-details">
+                            - AI 컨설팅 프로젝트 3건 이상 성공적 완료<br>
+                            - 고객사 만족도 90점 이상 달성<br>
+                            - B2B 맞춤형 교육 모듈 설계
+                        </div>
+                        <div class="kpi-badge">교육 효과 20% 향상</div>
+                    </div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">📚</div>
+                    <div class="goal-content">
+                        <div class="goal-title">개인 성장 목표</div>
+                        <div class="goal-details">
+                            - ADsP 자격증 취득<br>
+                            - 매월 1권의 관련 도서 학습<br>
+                            - 스터디 그룹 활동 지속
+                        </div>
+                        <div class="kpi-badge">전문성 강화</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Action Plan -->
+        <div class="slide" style="background-color: #fff5f0;">
+            <div class="subtitle">실행 계획</div>
+            <div class="timeline-container">
+                <div class="timeline-half">
+                    <div class="timeline-title">
+                        <span>🌱</span>상반기 계획
+                    </div>
+                    <ul class="timeline-list">
+                        <li>OA 고급 활용법 학습 완료</li>
+                        <li>데이터 시각화 도구 습득</li>
+                        <li>자격증 시험 준비 및 응시</li>
+                        <li>모의 컨설팅 연습 진행</li>
+                    </ul>
+                </div>
+                <div class="timeline-half">
+                    <div class="timeline-title">
+                        <span>🌳</span>하반기 계획
+                    </div>
+                    <ul class="timeline-list">
+                        <li>고객사 프로젝트 집중 수행</li>
+                        <li>프레젠테이션 역량 강화</li>
+                        <li>AI 컨퍼런스 참석</li>
+                        <li>연간 목표 달성도 점검</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Conclusion -->
+        <div class="slide" style="background: linear-gradient(135deg, #f0f2ff 0%, #fff5f5 100%);">
+            <div class="subtitle">Vision 2025</div>
+            
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 1000px; margin: 2rem auto;">
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="color: #0732a2; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="background: #0732a2; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">1</span>
+                        핵심 가치
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                        <div class="keyword-item" style="margin: 0; text-align: center; padding: 1rem; background: rgba(249, 72, 119, 0.1); border-radius: 10px;">실질적 성과</div>
+                        <div class="keyword-item" style="margin: 0; text-align: center; padding: 1rem; background: rgba(249, 72, 119, 0.1); border-radius: 10px;">고객 만족</div>
+                        <div class="keyword-item" style="margin: 0; text-align: center; padding: 1rem; background: rgba(249, 72, 119, 0.1); border-radius: 10px;">전문성</div>
+                        <div class="keyword-item" style="margin: 0; text-align: center; padding: 1rem; background: rgba(249, 72, 119, 0.1); border-radius: 10px;">혁신</div>
+                    </div>
+                </div>
+                
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="color: #0732a2; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="background: #0732a2; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">2</span>
+                        약속의 실천
+                    </h3>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="color: #f94877;">•</span> 끊임없는 자기 계발
+                        </li>
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="color: #f94877;">•</span> 고객 중심 사고
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="color: #f94877;">•</span> 팀워크 강화
+                        </li>
+                    </ul>
+                </div>
+                
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="color: #0732a2; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="background: #0732a2; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">3</span>
+                        기대 성과
+                    </h3>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="color: #f94877;">•</span> AI 컨설팅 프로젝트 성공적 수행
+                        </li>
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="color: #f94877;">•</span> 자격증 취득을 통한 전문성 입증
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="color: #f94877;">•</span> 팀 내 시너지 창출
+                        </li>
+                    </ul>
+                </div>
+                
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="color: #0732a2; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="background: #0732a2; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">4</span>
+                        핵심 메시지
+                    </h3>
+                    <div style="text-align: center; color: #0732a2; font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem;">
+                        "가치 창출과 지속적 성장"
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <div style="color: #f94877; font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">
+                    감사합니다
+                </div>
+                <div style="color: #666; font-size: 0.9rem;">
+                    GPT KOREA | 2025 Goals & Vision
+                </div>
+            </div>
+        </div>
